@@ -1,0 +1,72 @@
+
+
+
+@if (searchable) {
+<div class="row">
+    <div class="col-sm-4">
+        <div class="form-group">
+            <input class="form-control ml-2" type="text" [(ngModel)]="searchTerm" name="searchTerm"
+                placeholder="Search..." (keyup)="applyFilter($event)" />
+        </div>
+    </div>
+</div>
+}
+<div class="table-responsive">
+    <table class="table table-bordered" #dt>
+        <thead>
+            <tr class="bg-primary">
+                @for (column of columnKeys; track column.field;) {
+                <th [ngStyle]="{'width':column?.width}" (click)="onSort(column.field)" style="cursor: pointer;">
+                    {{column.header}}
+                    @if (column?.sortable) {
+                    <span *ngIf="sortColumn === column?.field">
+                        {{ sortDirection ? '▲' : '▼' }}
+                    </span>
+                    }
+                </th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @for (rowData of paginateData; track $index) {
+            <tr>
+                @for (column of columnKeys; track $index) {
+                @switch(column.type) {
+                <!-- Column Type : Action Button -->
+                @case('actionButton') {
+                <td [ngStyle]="{'width':column?.width}">
+                    @for(actionbtn of column.selectOptions;track actionbtn.action){
+                    @switch (actionbtn.label) {
+                    @case('Flag') {
+                    <button type="button" (click)="performAction(actionbtn.label, rowData)"
+                        class="btn btn-success btn-circle btn-sm mr-2">
+                        <i [ngClass]="(rowData['flag'] === 1)?'fas fa-check' :'fas fa-times'"
+                            title="{{(rowData['flag'] === 1)?'Deactivate' :'Activate'}}"></i>
+                    </button>
+                    }
+                    @default {
+                    <button type="button" (click)="performAction(actionbtn.label, rowData)"
+                        class="btn {{ actionbtn.btnClass}} btn-circle btn-sm mr-2">
+                        <i class="{{actionbtn.icon}}" title="{{actionbtn.label}}"></i>
+                    </button>
+                    }
+                    }
+                    }
+                </td>
+                }
+                @default {
+                <td>{{ rowData[column.field] }}</td>
+                }
+                }
+                }
+            </tr>
+            }
+        </tbody>
+    </table>
+    <div class="d-flex justify-content-between p-2">
+        <label>Showing {{first}}-{{last}} of {{totalRecords}} Records</label>
+        <ngb-pagination [collectionSize]="totalRecords" [(page)]="page" [pageSize]="pageSize" [maxSize]="5"
+            [rotate]="true" [boundaryLinks]="true" (pageChange)="onPageChange()">
+        </ngb-pagination>
+    </div>
+</div>

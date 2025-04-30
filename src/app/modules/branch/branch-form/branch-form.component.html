@@ -1,0 +1,127 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Manage Branch</h1>
+            </div>
+            <!-- <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Company</li>
+                </ol>
+            </div> -->
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-12">
+                <form (ngSubmit)="onSubmit()" [formGroup]="form" class="needs-validation">
+                    <!-- jquery validation -->
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">{{this.isAddMode?'Create Branch':'Update Branch'}}</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <!-- form start -->
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group required">
+                                        <label class="control-label">Branch Code</label>
+                                        <input type="text" class="form-control" formControlName="branch_code" required
+                                            [ngClass]="{ 'is-invalid': submitted && f.branch_code.errors }">
+                                        @if (submitted && f.branch_code.errors) {
+                                        <div class="error invalid-feedback">
+                                            @if (f.branch_code.errors.required) {
+                                            <div>Branch Code cannot be blank.</div>
+                                            }
+                                        </div>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group required">
+                                        <label class="control-label">Branch Name (English)</label>
+                                        <input type="text" class="form-control" formControlName="branch_name_eng"
+                                            required
+                                            [ngClass]="{ 'is-invalid': submitted && f.branch_name_eng.errors }">
+                                        @if (submitted && f.branch_name_eng.errors) {
+                                        <div class="invalid-feedback">
+                                            @if (f.branch_name_eng.errors.required) {
+                                            <div>Branch Name (English) cannot be blank.</div>
+                                            }
+                                        </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Address</label>
+                                        <textarea rows="2" cols="15" class="form-control"
+                                            formControlName="address"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>City</label>
+                                        <input type="text" class="form-control" formControlName="city">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Pin Code</label>
+                                        <input type="text" class="form-control" formControlName="pin_code">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group required">
+                                        <label class="control-label">Email</label>
+                                        <input type="text" class="form-control" formControlName="email" required
+                                            [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+                                        @if (submitted && f.email.errors) {
+                                        <div class="invalid-feedback">
+                                            @if (f.email.errors.required) {
+                                            <div>Email cannot be blank.</div>
+                                            }
+                                            @if (f.email.errors.email) {
+                                            <div>Email is not a valid email address.</div>
+                                            }
+                                        </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="card-footer">
+                            <button type="submit"
+                                class="btn btn-success float-right">{{this.isAddMode?'Save':'Update'}}</button>
+                            <button type="reset" class="btn btn-secondary float-left"
+                                (click)="gotoList()">Reset</button>
+                        </div>
+                    </div>
+                    <!-- /.card -->
+                </form>
+            </div>
+            <!--/.col (left) -->
+            <!-- right column -->
+            <div class="col-md-6">
+
+            </div>
+            <!--/.col (right) -->
+        </div>
+        <!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section>
+<!-- /.content -->

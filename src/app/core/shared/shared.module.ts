@@ -9,6 +9,7 @@ import { CommonComponent } from './components/country-company-branch/common.comp
 import { DataTablesModule } from "angular-datatables";
 import { NgSelectModule } from '@ng-select/ng-select';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { LoadingComponent } from './components/loading/loading.component';
 
 const modules = [
   PermissionModule,
@@ -18,19 +19,17 @@ const modules = [
   NgSelectModule,
   SweetAlert2Module
 ];
-
+const components = [ConfirmationComponent,LoaderComponent,LoadingComponent,CommonComponent];
 
 @NgModule({
   declarations: [
     ConfirmationComponent,
     LoaderComponent,
+    LoadingComponent,
     CommonComponent
   ],
-  imports: [
-    CommonModule,
-    ...modules
-  ],
+  imports: [CommonModule,...modules],
   providers: [AlertService],
-  exports: [...modules,ConfirmationComponent,LoaderComponent,CommonComponent]
+  exports: [...modules,...components]
 })
 export class SharedAppModule { }

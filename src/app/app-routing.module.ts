@@ -8,11 +8,6 @@ import { RegisterComponent } from './modules/auth/register/register.component';
 import { ResetPasswordComponent } from './modules/auth/reset-password/reset-password.component';
 
 const routes: Routes = [
-  // {
-  //   path: '',
-  //   redirectTo: 'login',
-  //   pathMatch: 'full'
-  // },
   {
     path: '',
     component: DefaultLayoutComponent,
@@ -22,12 +17,14 @@ const routes: Routes = [
     },
     children: [
       { path: 'users', loadChildren: () => import('./modules/user/user.module').then(m => m.UserModule) },
+      { path: 'master/company', loadChildren: () => import('./modules/company/company.module').then(m => m.CompanyModule) },
+      { path: 'master/branch', loadChildren: () => import('./modules/branch/branch.module').then(m => m.BranchModule) },
       {
         path: 'widgets',
         loadChildren: () =>
           import('./modules/common/widgets/widgets.module').then((m) => m.WidgetsModule)
       },
-      {
+       {
         path: 'simple-table',
         loadChildren: () =>
           import('./modules/common/tables/simple-table/simple-table.module').then((m) => m.DataTableModule)
@@ -88,7 +85,7 @@ const routes: Routes = [
     data: {
       title: 'Login Page'
     }
-   },
+  },
 
   {
     path: 'register',
@@ -104,7 +101,7 @@ const routes: Routes = [
       title: 'Reset Password Page'
     }
   },
-  {path: '**', redirectTo: 'dashboard'}
+  { path: '**', redirectTo: 'dashboard' }
 ];
 
 @NgModule({

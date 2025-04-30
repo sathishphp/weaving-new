@@ -11,8 +11,7 @@ export class authGuard  {
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot)
     : Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    debugger
-    let token = localStorage.getItem('token');
+    let token = localStorage.getItem('access_token');
     if (token && state.url != '/login') {
       return true;
     }

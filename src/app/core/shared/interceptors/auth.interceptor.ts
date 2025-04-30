@@ -1,68 +1,79 @@
-import { Injectable } from '@angular/core';
-import getBrowserFingerprint from 'get-browser-fingerprint';
-
+import { inject, Injectable } from '@angular/core';
 import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
   HttpInterceptor,
-  HttpErrorResponse,
-  HttpResponse
+  HttpHandlerFn,
+  HttpInterceptorFn
 } from '@angular/common/http';
-import { Observable, catchError, finalize, throwError, from, lastValueFrom } from 'rxjs';
+import { Observable } from 'rxjs';
+import { switchMap, take } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment';
-import { GlobalService } from '../global.service';
-import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
+
+/* export function AuthInterceptor(
+  req: HttpRequest<any>,
+  next: HttpHandlerFn
+): Observable<HttpEvent<any>> {
+const authService = inject(AuthService);
+const token = authService.ACCESS_TOKEN || 'test12345';
+if (token) {
+  const cloned = req.clone({
+    setHeaders: {
+      authorization: token,
+    },
+  });
+  return next(cloned);
+} else {
+  return next(req);
+}
+}; */
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
+  private blackListed: string[];
+  constructor(private authService: AuthService) {
+    this.blackListed = [`${environment.API_BACKEND_POINT}/auth/refresh-token`];
+  }
 
-  constructor(private router: Router, private globalService: GlobalService) { }
-
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-
-    const fingerprint =  getBrowserFingerprint();
-
-    let accessToken = ''
-    if (localStorage.getItem('token')) {
-      accessToken = localStorage.getItem('token') || ''
-    }
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    // stage 1: Check if request for refresh token
+    /* if (!this.blackListed.includes(request.url) && request.url.indexOf('/auth/refresh-token') !== -1 ) {
+      return next.handle(request);
+    } */
+    const data = this.authService.userData;
+    const accessToken = data?.access_token;
+    // stage 2: Checking access_token exists(mean user logged in) or not
     if (accessToken) {
-      req = this.AddBrowserIdAndToken(req, fingerprint, accessToken);
-      req.headers.append('Content-Type', 'application/json');
-    } else {
-      req = this.AddBrowserId(req, fingerprint);
-      req.headers.append('Content-Type', 'application/json');
+      // stage 3: checking access_token validity
+      if (this.authService.isAuthTokenValid(accessToken)) {
+        let modifiedReq = request.clone({
+          headers: request.headers.append('Authorization', `Bearer ${accessToken}`)
+        });
+        return next.handle(modifiedReq)
+      }
+      // stage 4: Going to generate new tokens
+      return this.authService.generateNewTokens()
+        .pipe(
+          take(1),
+          switchMap((res: any) => {
+            let modifiedReq = request.clone({
+              headers: request.headers.append('Authorization', `Bearer ${res?.data?.access_token}`)
+            });
+            return next.handle(modifiedReq)
+          })
+        )
+      
     }
-    return next.handle(req).pipe(catchError(error => {
-      if(error.status == 401 && error.statusText == 'Unauthorized'){
-        localStorage.clear()
-        window.location.reload();
-      }else{
-        return throwError(() => error);
-      }
-
-    }))
+    return next.handle(request);
   }
-  AddBrowserIdAndToken(request: HttpRequest<any>, fingerprint: string, token: string) {
-    debugger
-    let userInfo = JSON.parse(localStorage.getItem('userInfo'));
-    if(!userInfo){userInfo = {user_id:null}}
-    return request.clone({
-      setHeaders: {
-        Authorization: `Bearer ${token}`,
-        'fingerprint': String(fingerprint),
-        'userId':String(userInfo.user_id)
-      }
+  /* intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    console.log("authinterceptor")
+    const authToken = this.authService.ACCESS_TOKEN;
+    const authReq = req.clone({
+      headers: req.headers.set('Authorization', `Bearer ${authToken}`)
     });
-  }
-  AddBrowserId(request: HttpRequest<any>, fingerprint: string) {
-    return request.clone({
-      setHeaders: {
-        'fingerprint': String(fingerprint)
-      }
-    });
-  }
-
-
+    return next.handle(authReq);
+  } */
 }

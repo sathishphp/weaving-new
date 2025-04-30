@@ -14,6 +14,9 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './core/shared/interceptors/auth.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrModule } from 'ngx-toastr';
+import { LoadingInterceptor } from './core/shared/interceptors/loading.interceptor';
+import { ErrorsInterceptor } from './core/shared/interceptors/error.interceptor';
 
 @NgModule({
   declarations: [
@@ -30,7 +33,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     DashboardModule,
     SharedAppModule,
     BrowserAnimationsModule,
-    NgbModule
+    NgbModule,
+    ToastrModule.forRoot({
+      positionClass :'toast-top-right'
+    })
 
   ],
   providers: [
@@ -39,6 +45,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     //   provide: LocationStrategy,
     //   useClass: HashLocationStrategy
     // },
+    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorsInterceptor, multi: true },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

@@ -6,7 +6,8 @@ import {AuthService} from '../services/auth.service'
 @Component({
   selector: 'app-reset-password',
   templateUrl: './reset-password.component.html',
-  styleUrls: ['./reset-password.component.scss']
+  styleUrls: ['./reset-password.component.scss'],
+  standalone:false
 })
 export class ResetPasswordComponent {
   resetPasswordForm = new FormGroup({
@@ -34,7 +35,7 @@ export class ResetPasswordComponent {
 
   onResetPassword(){
    this.isError = false;
-   this.authService.resetPassword(this.resetPasswordForm.value,this.token)?.subscribe((res:any)=>{
+   /* this.authService.resetPassword(this.resetPasswordForm.value,this.token)?.subscribe((res:any)=>{
     if(res.status === 'success'){
       this.router.navigate(['/login']);
     }else{
@@ -44,14 +45,14 @@ export class ResetPasswordComponent {
    }, err=>{
     this.isError = true;
     this.successMsg = 'Token is expired';
-   })
+   }) */
 
   }
 
   onEmailScreenClick(){
     this.isError = false;
     this.emailProcessing = true;
-    this.authService.forgetPassword(this.emailForm.value)?.subscribe((res:any)=>{
+    /* this.authService.forgetPassword(this.emailForm.value)?.subscribe((res:any)=>{
       this.emailProcessing = false;
      if(res.status === 'success'){
        this.successMsg = 'Reset Password Email Has Been Sent To Your Account';
@@ -62,7 +63,7 @@ export class ResetPasswordComponent {
 
     }, err=>{
      this.isError = true;
-    })
+    }) */
   }
 
 }

@@ -12,7 +12,22 @@ export enum ApiMethod {
 
 
 export const API_ENDPOINTS = {
-logIn:'users/login',
+  LOGIN:"/employee/login",
+  EMPLOYEE_LIST:'/employee/list',
+  REFRESH_TOKEN:'/employee/refresh-token',
+  COMPANY:'/company/',
+  COMPANY_LIST:'/company/list',
+  COMPANY_CREATE:'/company/create',
+  COMPANY_UPDATE:'/company/update/',
+  COMPANY_UPDATE_STATUS:'/company/update-status/',
+  COMPANY_DELETE:'/company/delete/',
+  BRANCH:'/branch/',
+  BRANCH_LIST:'/branch/list/1',
+  BRANCH_CREATE:'/branch/create',
+  BRANCH_UPDATE:'/branch/update/',
+  BRANCH_UPDATE_STATUS:'/branch/update-status/',
+  BRANCH_DELETE:'/branch/delete/',
+//logIn:'users/login',
 signUp:'users/signup',
 resetPassword:'users/resetPassword/',
 forgetPassword:'users/forgotPassword',

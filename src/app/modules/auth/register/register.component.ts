@@ -6,7 +6,8 @@ import { AuthService } from '../services/auth.service';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+  styleUrls: ['./register.component.scss'],
+  standalone:false
 })
 export class RegisterComponent {
 
@@ -26,7 +27,7 @@ export class RegisterComponent {
     if(!this.validForm()){
       return
     }
-    this.authService.signUp(this.signupForm.value)?.subscribe((res:any)=>{
+    this.authService.login(this.signupForm.value)?.subscribe((res:any)=>{
       if(res.status === 'success'){
         this.router.navigate(['/login']);
       }

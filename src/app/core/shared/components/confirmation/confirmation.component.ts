@@ -5,6 +5,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   selector: 'app-confirmation',
   templateUrl: './confirmation.component.html',
   styleUrls: ['./confirmation.component.scss'],
+  standalone:false,
   animations: [
     trigger('fadeInOut', [
       state('in', style({ opacity:1,transform: 'translateY(0)' })),

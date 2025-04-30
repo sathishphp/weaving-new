@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
-import { ApiHandlerService } from '../../../core/shared/utils/api-handler.service';
 import { API_ENDPOINTS, ApiMethod } from '../../../core/shared/utils/const';
+import { HttpClient } from '@angular/common/http';
+import { catchError, Observable, throwError } from 'rxjs';
+import { Employee } from '../../models';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable({
@@ -8,9 +11,24 @@ import { API_ENDPOINTS, ApiMethod } from '../../../core/shared/utils/const';
 })
 export class AuthService {
 
-  constructor(private http: ApiHandlerService) { }
+  constructor(private http: HttpClient) { }
 
-  signIn(data:any) {
+  getEmployeeList(): Observable<Employee[]> {
+    return this.http.get<Employee[]>(environment.API_BACKEND_POINT + API_ENDPOINTS.EMPLOYEE_LIST).pipe(catchError(this.handleError));
+  }
+
+  saveToken(token){
+    localStorage.setItem("accessToken",token);
+  }
+
+  getToken(){
+    return localStorage.getItem("accessToken");
+  }
+
+  isAuthenticated(){
+    return localStorage.getItem("accessToken");
+  }
+  /* signIn(data:any) {
     return this.http.requestCall(API_ENDPOINTS.logIn,ApiMethod.POST,'',data)
   }
 
@@ -24,9 +42,25 @@ export class AuthService {
   signUp(data:any) {
     return this.http.requestCall(API_ENDPOINTS.signUp,ApiMethod.POST,'',data)
   }
-
-  logout(){
+ */
+  logout() {
     localStorage.clear();
   }
 
+  login(postObj): Observable<Employee[]> {
+    return this.http.post<Employee[]>(environment.API_BACKEND_POINT + API_ENDPOINTS.LOGIN, postObj).pipe(catchError(this.handleError));
+  }
+
+  handleError(error: any) {
+    let errorMessage = "";
+    if (error.error instanceof ErrorEvent) {
+      // client-side error
+      errorMessage = `Error: ${error.error.message}`;
+    } else {
+      // server-side error
+      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+    }
+    console.log(errorMessage);
+    return throwError(() => new Error(errorMessage))
+  }
 }

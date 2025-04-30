@@ -5,6 +5,8 @@
 export const environment = {
   production: false,
   api_url:'http://localhost:3000/api/v1/',
+  API_BACKEND_POINT:'http://localhost:3000/api/v1',
+  API_FRONTEND_POINT: 'http://localhost:4200',
   ws_url:'http://localhost:3000',
   companyId:'1254863933218p0ppp'
 };
