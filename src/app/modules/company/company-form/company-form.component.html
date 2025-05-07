@@ -2,9 +2,6 @@
 <section class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1>Manage Company</h1>
-            </div>
             <!-- <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
@@ -23,9 +20,11 @@
             <div class="col-md-12">
                 <form (ngSubmit)="onSubmit()" [formGroup]="form" class="needs-validation">
                     <!-- jquery validation -->
-                    <div class="card card-primary">
+                    <div class="card card">
                         <div class="card-header">
-                            <h3 class="card-title">{{this.isAddMode?'Create Company':'Update Company'}}</h3>
+                            <div class="card-title col-sm-6">
+                                <h3>{{this.isAddMode?'Create Company':'Update Company'}}</h3>
+                            </div>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->

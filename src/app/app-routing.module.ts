@@ -10,6 +10,11 @@ import { ResetPasswordComponent } from './modules/auth/reset-password/reset-pass
 const routes: Routes = [
   {
     path: '',
+    redirectTo: 'login',
+    pathMatch: 'full'
+  },
+  {
+    path: '',
     component: DefaultLayoutComponent,
     // canActivate: [authGuard],
     data: {
@@ -19,17 +24,21 @@ const routes: Routes = [
       { path: 'users', loadChildren: () => import('./modules/user/user.module').then(m => m.UserModule) },
       { path: 'master/company', loadChildren: () => import('./modules/company/company.module').then(m => m.CompanyModule) },
       { path: 'master/branch', loadChildren: () => import('./modules/branch/branch.module').then(m => m.BranchModule) },
+      { path: 'master/shed', loadChildren: () => import('./modules/shed/shed.module').then(m => m.ShedModule) },
+      { path: 'master/department', loadChildren: () => import('./modules/department/department.module').then(m => m.DepartmentModule) },
+      { path: 'master/designation', loadChildren: () => import('./modules/designation/designation.module').then(m => m.DesignationModule) },
+      { path: 'master/machine-brand', loadChildren: () => import('./modules/machine-brand/machine-brand.module').then(m => m.MachineBrandModule) },
       {
         path: 'widgets',
         loadChildren: () =>
           import('./modules/common/widgets/widgets.module').then((m) => m.WidgetsModule)
       },
-       {
+      {
         path: 'simple-table',
         loadChildren: () =>
           import('./modules/common/tables/simple-table/simple-table.module').then((m) => m.DataTableModule)
       },
-      { path: 'gallery', loadChildren: () => import('./modules/common/gallery/gallery.module').then(m => m.GalleryModule) },
+      /* { path: 'gallery', loadChildren: () => import('./modules/common/gallery/gallery.module').then(m => m.GalleryModule) },
       { path: 'kanban-board', loadChildren: () => import('./modules/common/kanban-board/kanban-board.module').then(m => m.KanbanBoardModule) },
       { path: 'modals-alerts', loadChildren: () => import('./modules/common/ui-elements/modals-alerts/modals-alerts.module').then(m => m.ModalsAlertsModule) },
       { path: 'navs-tabs', loadChildren: () => import('./modules/common/ui-elements/navs-tabs/navs-tabs.module').then(m => m.NavsTabsModule) },
@@ -66,7 +75,7 @@ const routes: Routes = [
       { path: 'blank-page', loadChildren: () => import('./modules/common/extras/blank-page/blank-page.module').then(m => m.BlankPageModule) },
       { path: 'starter-page', loadChildren: () => import('./modules/common/extras/starter-page/starter-page.module').then(m => m.StarterPageModule) },
       { path: 'simple-search', loadChildren: () => import('./modules/common/search/simple-search/simple-search.module').then(m => m.SimpleSearchModule) },
-      { path: 'enhanced-search', loadChildren: () => import('./modules/common/search/enhanced-search/enhanced-search.module').then(m => m.EnhancedSearchModule) },
+      { path: 'enhanced-search', loadChildren: () => import('./modules/common/search/enhanced-search/enhanced-search.module').then(m => m.EnhancedSearchModule) }, */
 
     ]
   },
@@ -101,7 +110,7 @@ const routes: Routes = [
       title: 'Reset Password Page'
     }
   },
-  { path: '**', redirectTo: 'dashboard' }
+  { path: '**', redirectTo: 'login' }
 ];
 
 @NgModule({

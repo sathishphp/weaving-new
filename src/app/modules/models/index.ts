@@ -4,3 +4,4 @@ export * from './shed-model';
 export * from './department-model';
 export * from './designation-model';
 export * from './employee-model';
+export * from './machine-brand-model';

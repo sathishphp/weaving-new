@@ -1,0 +1,43 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+
+            <!-- <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Company</li>
+                </ol>
+            </div> -->
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title col-sm-6">
+                            <h3>Manage Designation</h3>
+                        </div>
+                        <div class="card-tools">
+                            <button type="submit" class="btn btn-primary" (click)="navigateToCreateDesignation()">Create
+                                Designation</button>
+                        </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <app-data-table #dataTable [tableId]="tableId" [pageLength]="paging.totalRecords"
+                            [pageNumber]="paging.page" [columnKeys]="headerList" [rows]="10" [sortField]="sortField"
+                            [rowsPerPageOptions]="[10, 25, 50]" [data]="designationList" [searchable]="true"
+                            (performGlobalAction)="performBtnAction($event)">
+                        </app-data-table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+    </div>
+</section>

@@ -20,10 +20,10 @@
             <div class="col-md-12">
                 <form (ngSubmit)="onSubmit()" [formGroup]="form" class="needs-validation">
                     <!-- jquery validation -->
-                    <div class="card card">
+                    <div class="card card-outline card-primary">
                         <div class="card-header">
                             <div class="card-title col-sm-6">
-                                <h3>{{this.isAddMode?'Create Branch':'Update Branch'}}</h3>
+                                <h3>{{this.isAddMode?'Create Department':'Update Department'}}</h3>
                             </div>
                         </div>
                         <!-- /.card-header -->
@@ -32,28 +32,29 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group required">
-                                        <label class="control-label">Branch Code</label>
-                                        <input type="text" class="form-control" formControlName="branch_code" required
-                                            [ngClass]="{ 'is-invalid': submitted && f.branch_code.errors }">
-                                        @if (submitted && f.branch_code.errors) {
-                                        <div class="error invalid-feedback">
-                                            @if (f.branch_code.errors.required) {
-                                            <div>Branch Code cannot be blank.</div>
-                                            }
-                                        </div>
-                                        }
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group required">
-                                        <label class="control-label">Branch Name (English)</label>
-                                        <input type="text" class="form-control" formControlName="branch_name_eng"
+                                        <label class="control-label">Department Code</label>
+                                        <input type="text" class="form-control" formControlName="department_code"
                                             required
-                                            [ngClass]="{ 'is-invalid': submitted && f.branch_name_eng.errors }">
-                                        @if (submitted && f.branch_name_eng.errors) {
+                                            [ngClass]="{ 'is-invalid': submitted && f.department_code.errors }">
+                                        @if (submitted && f.department_code.errors) {
+                                        <div class="error invalid-feedback">
+                                            @if (f.department_code.errors.required) {
+                                            <div>Department Code cannot be blank.</div>
+                                            }
+                                        </div>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group required">
+                                        <label class="control-label">Department Name (English)</label>
+                                        <input type="text" class="form-control" formControlName="department_name_eng"
+                                            required
+                                            [ngClass]="{ 'is-invalid': submitted && f.department_name_eng.errors }">
+                                        @if (submitted && f.department_name_eng.errors) {
                                         <div class="invalid-feedback">
-                                            @if (f.branch_name_eng.errors.required) {
-                                            <div>Branch Name (English) cannot be blank.</div>
+                                            @if (f.department_name_eng.errors.required) {
+                                            <div>Department Name (English) cannot be blank.</div>
                                             }
                                         </div>
                                         }
@@ -62,38 +63,15 @@
                             </div>
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label>Address</label>
-                                        <textarea rows="2" cols="15" class="form-control"
-                                            formControlName="address"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label>City</label>
-                                        <input type="text" class="form-control" formControlName="city">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label>Pin Code</label>
-                                        <input type="text" class="form-control" formControlName="pin_code">
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
                                     <div class="form-group required">
-                                        <label class="control-label">Email</label>
-                                        <input type="text" class="form-control" formControlName="email" required
-                                            [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
-                                        @if (submitted && f.email.errors) {
+                                        <label class="control-label">Department Name (Language)</label>
+                                        <input type="text" class="form-control" formControlName="department_name_lang"
+                                            required
+                                            [ngClass]="{ 'is-invalid': submitted && f.department_name_lang.errors }">
+                                        @if (submitted && f.department_name_lang.errors) {
                                         <div class="invalid-feedback">
-                                            @if (f.email.errors.required) {
-                                            <div>Email cannot be blank.</div>
-                                            }
-                                            @if (f.email.errors.email) {
-                                            <div>Email is not a valid email address.</div>
+                                            @if (f.department_name_lang.errors.required) {
+                                            <div>Department Name (Language) cannot be blank.</div>
                                             }
                                         </div>
                                         }
